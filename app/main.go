@@ -5,6 +5,8 @@ import (
 	"embed"
 	"image"
 	"image/color"
+	"os"
+	"strconv"
 	"time"
 
 	"github.com/hajimehoshi/ebiten/v2"
@@ -103,7 +105,13 @@ func readImg(path string) (*ebiten.Image, error) {
 }
 
 func main() {
-	// Start the timer/hook goroutine
+	if len(os.Args) >= 2 {
+		ratioStr := os.Args[1]
+		if ratioFloat, err := strconv.ParseFloat(ratioStr, 64); err == nil {
+			ratio = ratioFloat
+		}
+	}
+
 	go timer(time.Second, resetChan)
 	go keypress(resetChan)
 
