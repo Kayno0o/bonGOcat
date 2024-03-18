@@ -72,7 +72,7 @@ func (g *Game) Update() error {
 }
 
 func (g *Game) Draw(screen *ebiten.Image) {
-	screen.Fill(color.Black)
+	screen.Fill(color.RGBA{0, 0, 0, 0})
 	img := middle
 	if position == -1 {
 		img = left
@@ -141,9 +141,12 @@ func main() {
 	ebiten.SetWindowIcon([]image.Image{middle})
 
 	game := Game{}
+	options := ebiten.RunGameOptions{
+		ScreenTransparent: true,
+	}
 
 	// Start the game loop
-	if err := ebiten.RunGame(&game); err != nil {
+	if err := ebiten.RunGameWithOptions(&game, &options); err != nil {
 		panic(err)
 	}
 }
