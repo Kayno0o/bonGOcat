@@ -1,7 +1,8 @@
-docker:
-	docker-compose up --build
+.PHONY: build
+build:
+	go build -o dist/bongo
+	chmod +x dist/bongo
 
+.PHONY: run
 run:
-	./app/bongo
-
-prod: docker run
+	./dist/bongo
