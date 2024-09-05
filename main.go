@@ -91,17 +91,17 @@ func (g *Game) Layout(outsideWidth, outsideHeight int) (screenWidth, screenHeigh
 	return int(float64(bw) * ratio), int(float64(bh) * ratio)
 }
 
-func readImg(path string) (*ebiten.Image, error) {
+func readImg(path string) *ebiten.Image {
 	imgBytes, err := embeddedImages.ReadFile(path)
 	if err != nil {
-		return nil, err
+		panic(err)
 	}
 	img, _, err := ebitenutil.NewImageFromReader(bytes.NewReader(imgBytes))
 	if err != nil {
-		return nil, err
+		panic(err)
 	}
 
-	return img, nil
+	return img
 }
 
 func main() {
@@ -115,23 +115,9 @@ func main() {
 	go timer(time.Second, resetChan)
 	go keypress(resetChan)
 
-	img, err := readImg("assets/left.png")
-	if err != nil {
-		panic(err)
-	}
-	left = img
-
-	img, err = readImg("assets/middle.png")
-	if err != nil {
-		panic(err)
-	}
-	middle = img
-
-	img, err = readImg("assets/right.png")
-	if err != nil {
-		panic(err)
-	}
-	right = img
+	left = readImg("assets/left.png")
+	middle = readImg("assets/middle.png")
+	right = readImg("assets/right.png")
 
 	// Create the window
 	ebiten.SetWindowSize(int(float64(bw)*ratio), int(float64(bh)*ratio))
