@@ -22,3 +22,7 @@ make build
 ```bash
 ./dist/bongo 0.5
 ```
+
+```bash
+nohup ./dist/bongo 0.5 &
+```
